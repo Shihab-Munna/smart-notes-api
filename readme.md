@@ -37,7 +37,7 @@ git clone https://github.com/Shihab-Munna/smart-notes-api.git
 Navigate into the project directory and run:
 
 ```bash
-cd smart_note
+cd smart-notes-api
 go mod tidy
 ```
 
