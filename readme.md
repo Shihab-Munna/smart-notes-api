@@ -29,7 +29,7 @@ A RESTful API for managing notes using Go, PostgreSQL (via Docker), and GORM wit
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Shihab-Munna/smart-notes-api.git
 ```
 
 ### 2. Install Go modules
@@ -101,84 +101,88 @@ go run main.go
 
 If everything is set up correctly, the server should now be running at <http://localhost:8080>.
 
-## API Endpoints (Under Development)
+## API Endpoints (Under Development) 🏗️
 
 1. **Create a new note:**
-    - **URL:** `POST /notes`
-    - **Description:** Create a new note.
-    - **Request Body (JSON):**
 
-    ```json
-    {
-        "title": "Note Title",
-        "content": "Note content goes here"
-    }
-    ```
+   - **URL:** `POST /notes`
+   - **Description:** Create a new note.
+   - **Request Body (JSON):**
 
-    - **Response (Success 201):**
+   ```json
+   {
+     "title": "Note Title",
+     "content": "Note content goes here"
+   }
+   ```
 
-    ```json
-    {
-        "id": "uuid-of-note",
-        "title": "Note Title",
-        "content": "Note content goes here"
-    }
-    ```
+   - **Response (Success 201):**
+
+   ```json
+   {
+     "id": "uuid-of-note",
+     "title": "Note Title",
+     "content": "Note content goes here"
+   }
+   ```
 
 2. **Retrieve all notes:**
-    - **URL:** `GET /notes`
-    - **Description:** Fetch all notes.
-    - **Response (Success 200):**
 
-    ```json
-    [
-        {
-            "id": "uuid-of-note",
-            "title": "Note Title",
-            "content": "Note content goes here"
-        }
-    ]
-    ```
+   - **URL:** `GET /notes`
+   - **Description:** Fetch all notes.
+   - **Response (Success 200):**
+
+   ```json
+   [
+     {
+       "id": "uuid-of-note",
+       "title": "Note Title",
+       "content": "Note content goes here"
+     }
+   ]
+   ```
 
 3. **Retrieve a note by UUID:**
-    - **URL:** `GET /notes/{id}`
-    - **Description:** Retrieve a note by its UUID.
-    - **Response (Success 200):**
 
-    ```json
-    {
-        "id": "uuid-of-note",
-        "title": "Note Title",
-        "content": "Note content goes here"
-    }
-    ```
+   - **URL:** `GET /notes/{id}`
+   - **Description:** Retrieve a note by its UUID.
+   - **Response (Success 200):**
+
+   ```json
+   {
+     "id": "uuid-of-note",
+     "title": "Note Title",
+     "content": "Note content goes here"
+   }
+   ```
 
 4. **Update a note by UUID:**
-    - **URL:** `PUT /notes/{id}`
-    - **Description:** Update a note by its UUID.
-    - **Request Body (JSON):**
 
-    ```json
-    {
-        "title": "Updated Title",
-        "content": "Updated content goes here"
-    }
-    ```
+   - **URL:** `PUT /notes/{id}`
+   - **Description:** Update a note by its UUID.
+   - **Request Body (JSON):**
 
-    - **Response (Success 200):**
+   ```json
+   {
+     "title": "Updated Title",
+     "content": "Updated content goes here"
+   }
+   ```
 
-    ```json
-    {
-        "id": "uuid-of-note",
-        "title": "Updated Title",
-        "content": "Updated content goes here"
-    }
-    ```
+   - **Response (Success 200):**
+
+   ```json
+   {
+     "id": "uuid-of-note",
+     "title": "Updated Title",
+     "content": "Updated content goes here"
+   }
+   ```
 
 5. **Delete a note by UUID:**
-    - **URL:** `DELETE /notes/{id}`
-    - **Description:** Delete a note by its UUID.
-    - **Response (Success 204 - No Content)**
+   - **URL:** `DELETE /notes/{id}`
+   - **Description:** Delete a note by its UUID.
+   - **Response (Success 204 - No Content)**
 
 ## Development
 
@@ -188,3 +192,25 @@ If everything is set up correctly, the server should now be running at <http://l
 ## Contributing
 
 Feel free to fork the repository and make contributions. For significant changes, please open an issue first to discuss what you would like to change.
+
+## MIT License
+
+Copyright (c) 2024 Shihab Munna
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
