@@ -9,11 +9,11 @@ A RESTful API for managing notes using Go, PostgreSQL (via Docker), and GORM wit
 - Environment-based configuration using `.env` files
 - PostgreSQL as the database (via Docker)
 - GORM for ORM (Object-Relational Mapping)
+- Signup & Login added.
+- Token-based authentication ( JWT ).
 
 ## Features to be added
 
-- Sign up and log in.
-- Token-based authentication ( JWT ).
 - API Documentation (Swagger)
 - And many more to be added 🔥
 

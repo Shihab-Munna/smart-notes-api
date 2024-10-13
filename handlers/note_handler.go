@@ -18,7 +18,7 @@ func NoteHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		createNote(w, r)
 	default:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		utils.WriteJSONError(w, http.StatusMethodNotAllowed, "Method not allowed")
 	}
 }
 
@@ -27,7 +27,7 @@ func NoteByIdHandler(w http.ResponseWriter, r *http.Request) {
 	idStr := strings.TrimPrefix(r.URL.Path, "/notes/")
 	id, err := uuid.Parse(idStr)
 	if err != nil {
-		http.Error(w, "Invalid note ID", http.StatusBadRequest)
+		utils.WriteJSONError(w, http.StatusBadRequest, "Invalid note ID")
 		return
 	}
 
@@ -39,7 +39,7 @@ func NoteByIdHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodDelete:
 		deleteNoteByID(w, r, id)
 	default:
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		utils.WriteJSONError(w, http.StatusMethodNotAllowed, "Method not allowed")
 	}
 }
 
@@ -47,7 +47,7 @@ func NoteByIdHandler(w http.ResponseWriter, r *http.Request) {
 func getNotes(w http.ResponseWriter, _ *http.Request) {
 	var notes []models.Note
 	if err := database.DB.Find(&notes).Error; err != nil {
-		http.Error(w, "Failed to retrieve notes", http.StatusInternalServerError)
+		utils.WriteJSONError(w, http.StatusInternalServerError, "Failed to retrieve notes")
 		return
 	}
 
@@ -59,12 +59,12 @@ func createNote(w http.ResponseWriter, r *http.Request) {
 	var newNote models.Note
 
 	if err := json.NewDecoder(r.Body).Decode(&newNote); err != nil {
-		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		utils.WriteJSONError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 
 	if err := database.DB.Create(&newNote).Error; err != nil {
-		http.Error(w, "Failed to create note", http.StatusInternalServerError)
+		utils.WriteJSONError(w, http.StatusInternalServerError, "Failed to create note")
 		return
 	}
 
@@ -75,7 +75,7 @@ func createNote(w http.ResponseWriter, r *http.Request) {
 func getNoteByID(w http.ResponseWriter, _ *http.Request, id uuid.UUID) {
 	var note models.Note
 	if err := database.DB.First(&note, "id = ?", id).Error; err != nil {
-		http.Error(w, "Note not found", http.StatusNotFound)
+		utils.WriteJSONError(w, http.StatusNotFound, "Note not found")
 		return
 	}
 
@@ -86,20 +86,20 @@ func getNoteByID(w http.ResponseWriter, _ *http.Request, id uuid.UUID) {
 func updateNoteByID(w http.ResponseWriter, r *http.Request, id uuid.UUID) {
 	var updatedNote models.Note
 	if err := json.NewDecoder(r.Body).Decode(&updatedNote); err != nil {
-		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		utils.WriteJSONError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 
 	var existingNote models.Note
 	if err := database.DB.First(&existingNote, "id = ?", id).Error; err != nil {
-		http.Error(w, "Note not found", http.StatusNotFound)
+		utils.WriteJSONError(w, http.StatusNotFound, "Note not found")
 		return
 	}
 
 	existingNote.Title = updatedNote.Title
 	existingNote.Content = updatedNote.Content
 	if err := database.DB.Save(&existingNote).Error; err != nil {
-		http.Error(w, "Failed to update note", http.StatusInternalServerError)
+		utils.WriteJSONError(w, http.StatusInternalServerError, "Failed to update note")
 		return
 	}
 
@@ -109,9 +109,9 @@ func updateNoteByID(w http.ResponseWriter, r *http.Request, id uuid.UUID) {
 // deleteNoteByID deletes a note by ID from the database using GORM
 func deleteNoteByID(w http.ResponseWriter, _ *http.Request, id uuid.UUID) {
 	if err := database.DB.Delete(&models.Note{}, "id = ?", id).Error; err != nil {
-		http.Error(w, "Failed to delete note", http.StatusInternalServerError)
+		utils.WriteJSONError(w, http.StatusInternalServerError, "Failed to delete note")
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	utils.WriteJSON(w, http.StatusNoContent, nil)
 }
