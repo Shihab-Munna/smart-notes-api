@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"smart_note/database"
 	"smart_note/handlers"
 	"smart_note/models"
@@ -11,12 +13,12 @@ import (
 )
 
 func main() {
-	  // Load .env file
-	  err := godotenv.Load()
-	  if err != nil {
-		  log.Fatalf("Error loading .env file")
-	  }
-  
+	// Load .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
 	log.Println("Initializing the database connection...")
 	database.Init()
 
@@ -32,17 +34,24 @@ func main() {
 		log.Println("Migrating Done ....")
 	}
 
+	// Get the port from environment variables (default to 5001 if not set)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5001" // Default port
+		log.Printf("PORT environment variable not set, defaulting to port %s", port)
+	}
+
 	// Define HTTP routes
 	http.HandleFunc("/notes", handlers.NoteHandler)
 	http.HandleFunc("/notes/", handlers.NoteByIdHandler)
 
 	// Log the successful server startup
-	log.Println("Starting server on :5001...")
+	log.Printf("Starting server on :%s...\n", port)
 
-	// Start the server and check for errors
-	if err := http.ListenAndServe(":5001", nil); err != nil {
+	// Start the server on the specified port
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", port), nil); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	} else {
-		log.Println("Server started successfully on :5001")
+		log.Printf("Server started successfully on :%s", port)
 	}
 }

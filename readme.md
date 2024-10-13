@@ -86,6 +86,7 @@ cp .env.example .env
 Open the .env file and update the placeholder values with your actual PostgreSQL connection information:
 
 ```bash
+PORT=5001
 DB_DSN=host=localhost user=smart_note_user password=password dbname=smart_note port=5432 sslmode=disable
 ```
 
@@ -99,7 +100,7 @@ Run the Go application:
 go run main.go
 ```
 
-If everything is set up correctly, the server should now be running at <http://localhost:8080>.
+If everything is set up correctly, the server should now be running at <http://localhost:5001>.
 
 ## API Endpoints (Under Development) 🏗️
 
