@@ -1,0 +1,13 @@
+# Ignore environment variables
+.env
+
+# Ignore Go build artifacts
+*.exe
+*.out
+*.log
+*.test
+*.mod
+*.sum
+
+# Vendor directory
+/vendor/
